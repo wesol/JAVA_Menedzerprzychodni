@@ -3,7 +3,7 @@ package manager;
 import java.io.FilterInputStream;
 import java.util.Scanner;
 
-public class szpitalApp {
+public class SzpitalApp {
 
 	public static void main(String[] args) {
 		// obiekt do pobierania danych
@@ -15,6 +15,7 @@ public class szpitalApp {
 
 		DBConnector baza = new DBConnector();
 
+		
 		outerLoop: while (true) {
 			System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "'U' - Umówienie wizyty",
 					"'W' - Wyœwietlenie przysz³ych wizyt", "'O' - Wyœwietlenie wizyt odbytych",
@@ -52,7 +53,7 @@ public class szpitalApp {
 				break;
 			}
 			case "AP": {
-
+				PacjenciAdmin.pacjenciAdmin(baza, rl);
 				break;
 			}
 			case "Q": {

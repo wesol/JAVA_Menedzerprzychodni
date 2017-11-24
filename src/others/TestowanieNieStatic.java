@@ -1,4 +1,4 @@
-package testowanie;
+package others;
 
 public class TestowanieNieStatic {
 	public int a = 2;

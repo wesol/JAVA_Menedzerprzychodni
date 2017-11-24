@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.Scanner;
 
 public class DBConnector {
 	private ResultSet rs;
@@ -39,7 +40,7 @@ public class DBConnector {
 
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("\n!!!B³¹d na zapytaniu1:\n" + e);
+			System.out.println("\n!!!B³¹d na zapytaniu z czterema kolumnami (1):\n" + e);
 		}
 
 	}
@@ -59,7 +60,7 @@ public class DBConnector {
 
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("\n!!!B³¹d na zapytaniu2:\n" + e);
+			System.out.println("\n!!!B³¹d na zapytaniu z piêcioma kolumnami (2):\n" + e);
 			;
 		}
 
@@ -82,12 +83,13 @@ public class DBConnector {
 
 			con.close();
 		} catch (SQLException e) {
-			System.out.println("\n!!!B³¹d na zapytaniu3:\n" + e);
-			
+			System.out.println("\n!!!B³¹d na zapytaniu z 6-ioma kolumnami (3):" + e);
+
 		}
 	}
-//===========================================================================================
-//	update
+
+	// ===========================================================================================
+	// wstawianie nowego rekordu/update
 	public void insert(String query) {
 		connect();
 		try {
@@ -95,13 +97,13 @@ public class DBConnector {
 			con.close();
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d na insert:\n" + e);
-			
+
 		}
 	}
 
-	//===========================================================================================
-		//	zapisywanie id-kow do zbioru
-	public HashSet<String> zbior(String query) { 
+	// ===========================================================================================
+	// zapisywanie id-kow do zbioru
+	public HashSet<String> zbior(String query) {
 		HashSet<String> zbior_id = new HashSet<>();
 		connect();
 		try {
@@ -116,5 +118,30 @@ public class DBConnector {
 		}
 		return zbior_id;
 	}
-	
+
+
+
+
+	public void update(Scanner rl, String changedValueName, String id, String databaseTabelName, String databaseColumnNameId, String databaseUpdatedColumnName) {
+		while (true) {
+		System.out.println("WprowadŸ "+ changedValueName +":");
+		String temp = rl.nextLine();
+		String temp_confirmed = temp.substring(0, 1).toUpperCase() + temp.substring(1, temp.length()).toLowerCase();
+		System.out.println("Wprowadzono  "+ changedValueName +": '" + temp_confirmed +"'.\n('Y'- Zatwierdzenie || dowolny przycisk aby poprawiæ || 'Q'- poprzedniego menu bez zapisywania zmian,dowolny przycisk aby poprawiæ.");
+		String choice_wew = rl.nextLine().toUpperCase();
+		if (choice_wew.equals("Y")) {
+			connect();
+			try {
+				stmt.executeUpdate("Update "+ databaseTabelName +" set " + databaseUpdatedColumnName + " = '"+ temp_confirmed +"' where "+ databaseColumnNameId +" = " + id);
+				con.close();
+			} catch (SQLException e) {
+				System.out.println("\n!!!B³¹d na insert:\n" + e);
+			}
+			System.out.println("Zaktualizowano rekord");
+			break;
+			
+		}else if (choice_wew.equals("Q")) 				
+			break;
+		}
+	}
 }
