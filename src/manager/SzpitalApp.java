@@ -14,7 +14,7 @@ public class SzpitalApp {
 		});
 
 		DBConnector baza = new DBConnector();
-
+		
 		
 		outerLoop: while (true) {
 			System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "'U' - Umówienie wizyty",
