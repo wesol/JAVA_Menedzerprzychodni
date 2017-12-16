@@ -3,18 +3,20 @@ package manager;
 import java.io.FilterInputStream;
 import java.util.Scanner;
 
-public class SzpitalApp {
+public class HospitalApp {
 
 	public static void main(String[] args) {
-		// obiekt do pobierania danych
 		Scanner rl = new Scanner(new FilterInputStream(System.in) {
 			@Override
 			public void close() {
 			}
 		});
 
-		DBConnector baza = new DBConnector();
-		
+		Visits visits = new Visits();
+		PatientsList patientsList = new PatientsList();
+		DoctorsList doctorsList = new DoctorsList();
+		PatientsAdmin patientsAdmin = new PatientsAdmin();
+		DoctorsAdmin doctorsAdmin = new DoctorsAdmin();
 		
 		outerLoop: while (true) {
 			System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "'U' - Umówienie wizyty",
@@ -26,34 +28,31 @@ public class SzpitalApp {
 
 			switch (choice) {
 			case "U": {
-				/////
-				
-				
-				///////
+				visits.bookvisit();
 				break;
 			}
 			case "W": {
-				Wizyty.wizytyPrzyszle(baza, rl);
+				visits.futureVisits();
 				break;
 			}
 			case "O": {
-				Wizyty.wizytyOdbyte(baza, rl);
+				visits.doneVisits();
 				break;
 			}
 			case "L": {
-				ListaLekarzy.lista(baza, rl);
+				doctorsList.list();
 				break;
 			}
 			case "P": {
-				ListaPacjentow.lista(baza, rl);
+				patientsList.list();
 				break;
 			}
 			case "AL": {
-				LekarzeAdmin.lekarzeAdmin(baza, rl);
+				doctorsAdmin.doctors();
 				break;
 			}
 			case "AP": {
-				PacjenciAdmin.pacjenciAdmin(baza, rl);
+				patientsAdmin.patients();
 				break;
 			}
 			case "Q": {
@@ -64,6 +63,6 @@ public class SzpitalApp {
 				System.out.println("Wybierz jedn¹ z dostêpnych opcji:");
 			}
 		}
-
+		rl.close();
 	}
 }
