@@ -1,6 +1,7 @@
 package manager;
 
 import java.io.FilterInputStream;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PatientsList {
@@ -12,7 +13,7 @@ public class PatientsList {
 	});
 	DBConnector base = new DBConnector();
 	
-	public void list() {
+	public void list() throws SQLException {
 		base.query("Select * from pacjenci", "%-5s%-15s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon","PESEL");
 
 		outerLoop: while (true) {

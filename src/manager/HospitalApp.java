@@ -1,11 +1,12 @@
 package manager;
 
 import java.io.FilterInputStream;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class HospitalApp {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		Scanner rl = new Scanner(new FilterInputStream(System.in) {
 			@Override
 			public void close() {

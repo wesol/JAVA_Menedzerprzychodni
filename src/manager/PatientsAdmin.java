@@ -1,6 +1,7 @@
 package manager;
 
 import java.io.FilterInputStream;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class PatientsAdmin {
 	DBConnector base = new DBConnector();
 	PatientsList patientsList = new PatientsList();
 
-	public void patients() {
+	public void patients() throws SQLException {
 
 		outerLoop: while (true) {
 			System.out.println(
@@ -94,8 +95,7 @@ public class PatientsAdmin {
 						choice_wew = rl.nextLine().toUpperCase();
 
 						if (choice_wew.equals("T")) {
-							base.insert("Delete from pacjenci where id_p =" + id);
-							System.out.println("Usuniêto z bazy\n");
+							base.delete("Delete from pacjenci where id_p =" + id);
 						} else
 							System.out.println("Nie usuniêto\n");
 						break;

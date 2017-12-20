@@ -28,7 +28,7 @@ public class DBConnector {
 		}
 	}
 
-	public void query(String query, String format, String title2, String title3) {
+	public void query(String query, String format, String title2, String title3) throws SQLException {
 
 		connect();
 
@@ -42,14 +42,13 @@ public class DBConnector {
 				System.out.println();
 			}
 
-			con.close();
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d na zapytaniu z czterema kolumnami (1):\n" + e);
 		}
-
+		con.close();
 	}
 
-	public Patient queryPatientData(String pesel) {
+	public Patient queryPatientData(String pesel) throws SQLException {
 		Patient patient = new Patient();
 		connect();
 
@@ -64,19 +63,21 @@ public class DBConnector {
 				patient.setPesel(rs.getString(5));
 			}
 
-			con.close();
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d na zapytaniu pacjent:\n" + e);
 		}
+		con.close();
 		return patient;
 
 	}
-	public Doctor queryDoctorData(String doctorName, String doctorLast) {
+
+	public Doctor queryDoctorData(String doctorName, String doctorLast) throws SQLException {
 		Doctor doctor = new Doctor();
 		connect();
-		
+
 		try {
-			rs = stmt.executeQuery("Select * from lekarze where name='" + doctorName + "' and last='"+doctorLast+"'");
+			rs = stmt.executeQuery(
+					"Select * from lekarze where name='" + doctorName + "' and last='" + doctorLast + "'");
 			if (rs.next()) {
 				// kolejnoœæ kolumn obs³ugiwana w zapytaniu
 				doctor.setID(rs.getInt(1));
@@ -84,16 +85,16 @@ public class DBConnector {
 				doctor.setLast(rs.getString(3));
 				doctor.setCellphone(rs.getString(4));
 			}
-			
-			con.close();
+
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d na zapytaniu lekarz:\n" + e);
 		}
+		con.close();
 		return doctor;
-		
+
 	}
 
-	public void query(String query, String format, String title2, String title3, String title4) {
+	public void query(String query, String format, String title2, String title3, String title4) throws SQLException {
 
 		connect();
 
@@ -107,15 +108,15 @@ public class DBConnector {
 				System.out.println();
 			}
 
-			con.close();
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d na zapytaniu z piêcioma kolumnami (2):\n" + e);
-			;
 		}
+		con.close();
 
 	}
 
-	public void query(String query, String format, String title2, String title3, String title4, String title5) {
+	public void query(String query, String format, String title2, String title3, String title4, String title5)
+			throws SQLException {
 
 		connect();
 		try {
@@ -129,29 +130,42 @@ public class DBConnector {
 				System.out.println();
 			}
 
-			con.close();
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d na zapytaniu z 6-ioma kolumnami (3):" + e);
 
 		}
+		con.close();
 	}
 
 	// ===========================================================================================
 	// wstawianie nowego rekordu/update
-	public void insert(String query) {
+	public void insert(String query) throws SQLException {
 		connect();
 		try {
 			stmt.executeUpdate(query);
-			con.close();
+			
 		} catch (SQLException e) {
-			System.out.println("\n!!!B³¹d na insert:\n" + e);
+			System.out.println("\nB³¹d na insert");
 
 		}
+		con.close();
+	}
+	
+	public void delete(String query) throws SQLException {
+		connect();
+		try {
+			stmt.executeUpdate(query);
+			System.out.println("Usuniêto z bazy\n");
+		} catch (SQLException e) {
+			System.out.println("\nOsoba widnieje w relacji wizyt, nie mo¿na jej usun¹æ z bazy\n");
+
+		}
+		con.close();
 	}
 
 	// ===========================================================================================
 	// zapisywanie id-kow do zbioru
-	public HashSet<String> zbior(String query) {
+	public HashSet<String> zbior(String query) throws SQLException {
 		HashSet<String> zbior_id = new HashSet<>();
 		this.connect();
 		try {
@@ -160,15 +174,15 @@ public class DBConnector {
 				zbior_id.add(rs.getString(1));
 			}
 
-			con.close();
 		} catch (SQLException e) {
-			System.out.println("\n!!!B³¹d przy tworzenie zbioru id\n" + e);
+			System.out.println("\n!!!B³¹d przy tworzeniu zbioru id\n" + e);
 		}
+		con.close();
 		return zbior_id;
 	}
 
 	public void update(Scanner rl, String changedValueName, String id, String databaseTabelName,
-			String databaseColumnNameId, String databaseUpdatedColumnName) {
+			String databaseColumnNameId, String databaseUpdatedColumnName) throws SQLException {
 		while (true) {
 			System.out.println("WprowadŸ " + changedValueName + ":");
 			String temp = rl.nextLine();
@@ -186,10 +200,13 @@ public class DBConnector {
 					System.out.println("\n!!!B³¹d na insert:\n" + e);
 				}
 				System.out.println("Zaktualizowano rekord");
+				con.close();
 				break;
 
-			} else if (choice_wew.equals("Q"))
+			} else if (choice_wew.equals("Q")) {
+				con.close();
 				break;
+			}
 		}
 	}
 }

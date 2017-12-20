@@ -1,6 +1,7 @@
 package manager;
 
 import java.io.FilterInputStream;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class DoctorsAdmin {
 	DBConnector base = new DBConnector();
 	DoctorsList doctorsList = new DoctorsList();
 	
-	public void doctors() {
+	public void doctors() throws SQLException {
 		outerLoop: while (true) {
 			System.out.println(
 					"'D' - Dodanie lekarza\n'U' - Usuniêcie lekarza\n'A' - Zaktualizowanie danych lekarza\n'L'- Lista lekarzy\n'Q' - Wyjœcie do poprzedniego menu");
@@ -86,8 +87,7 @@ public class DoctorsAdmin {
 						choice_wew = rl.nextLine().toUpperCase();
 
 						if (choice_wew.equals("T")) {
-							base.insert("Delete from lekarze where id_l =" + id);
-							System.out.println("Usuniêto z bazy\n");
+							base.delete("Delete from lekarze where id_l =" + id);
 						} else
 							System.out.println("Nie usuniêto\n");
 

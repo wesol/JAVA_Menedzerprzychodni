@@ -1,6 +1,7 @@
 package manager;
 
 import java.io.FilterInputStream;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import others.Doctor;
@@ -17,7 +18,7 @@ public class Visits {
 	Patient patient;
 	Doctor doctor;
 
-	private void visits(String[] queryF) {
+	private void visits(String[] queryF) throws SQLException {
 
 		base.query(queryF[0], queryF[1], queryF[2], queryF[3], queryF[4], queryF[5]);
 
@@ -46,14 +47,14 @@ public class Visits {
 		}
 	}
 
-	public void doneVisits() {
+	public void doneVisits() throws SQLException {
 		// zapytanie razem z formatowaniem bez sortowania
 		String[] queryF = { "SELECT * FROM przeszle_wizyty", "%-5s%-15s%-10s%-25s%-25s", "Data", "Godzina", "Lekarz",
 				"Pacjent" };
 		visits(queryF);
 	}
 
-	public void futureVisits() {
+	public void futureVisits() throws SQLException {
 
 		String[] queryF = { "SELECT * FROM przyszle_wizyty", "%-5s%-15s%-10s%-25s%-25s", "Data", "Godzina", "Lekarz",
 				"Pacjent" };
@@ -61,7 +62,7 @@ public class Visits {
 		visits(queryF);
 	}
 
-	public void bookvisit() {
+	public void bookvisit() throws SQLException {
 		String doctorName;
 		String doctorLast;
 		String patientPesel;
