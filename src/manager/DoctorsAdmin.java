@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class DoctorsAdmin {
-	
+
 	Scanner rl = new Scanner(new FilterInputStream(System.in) {
 		@Override
 		public void close() {
@@ -14,7 +14,7 @@ public class DoctorsAdmin {
 	});
 	DBConnector base = new DBConnector();
 	DoctorsList doctorsList = new DoctorsList();
-	
+
 	public void doctors() throws SQLException {
 		outerLoop: while (true) {
 			System.out.println(
@@ -73,7 +73,7 @@ public class DoctorsAdmin {
 				String id;
 				String choice_wew;
 				base.query("Select * from lekarze", "%-5s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon");
-				HashSet<String> zbior = base.zbior("Select * from lekarze");
+				HashSet<String> zbior = base.set("Select * from lekarze");
 
 				while (true) {
 					System.out
@@ -106,7 +106,7 @@ public class DoctorsAdmin {
 				String id;
 				String choice_wew;
 				base.query("Select * from lekarze", "%-5s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon");
-				HashSet<String> zbior = base.zbior("Select * from lekarze");
+				HashSet<String> zbior = base.set("Select * from lekarze");
 
 				while (true) {
 					System.out.println(

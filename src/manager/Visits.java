@@ -48,7 +48,7 @@ public class Visits {
 	}
 
 	public void doneVisits() throws SQLException {
-		// zapytanie razem z formatowaniem bez sortowania
+		// query and column width
 		String[] queryF = { "SELECT * FROM przeszle_wizyty", "%-5s%-15s%-10s%-25s%-25s", "Data", "Godzina", "Lekarz",
 				"Pacjent" };
 		visits(queryF);
@@ -69,7 +69,7 @@ public class Visits {
 		String date;
 		String hour;
 
-		String choice_wew;
+		String choice_temp;
 
 		outerLoop: do {
 
@@ -85,8 +85,8 @@ public class Visits {
 				} catch (Exception e) {
 					System.out.println(
 							"Takiego lekarza nie ma w bazie, wprowadz ponownie lub wprowadz 'Q' aby przerwaæ dodawanie wizyty");
-					choice_wew = rl.nextLine().toUpperCase();
-					if (choice_wew.equals("Q"))
+					choice_temp = rl.nextLine().toUpperCase();
+					if (choice_temp.equals("Q"))
 						break outerLoop;
 				}
 			}
@@ -101,8 +101,8 @@ public class Visits {
 				} catch (Exception e) {
 					System.out.println(
 							"Takiego pacjenta nie ma w bazie, wprowadz ponownie lub wprowadz 'Q' aby przerwaæ dodawanie wizyty");
-					choice_wew = rl.nextLine().toUpperCase();
-					if (choice_wew.equals("Q"))
+					choice_temp = rl.nextLine().toUpperCase();
+					if (choice_temp.equals("Q"))
 						break outerLoop;
 				}
 			}
@@ -128,15 +128,15 @@ public class Visits {
 					+ "\nPacjent:\t" + patient.getName() + " " + patient.getName() + "\nData:\t" + date + " " + hour
 					+ "\nPotwierdzenie i zapisanych danych - 'T', poprawienie wprowadzonych danych - ENTER lub wprowadŸ 'Q' aby wyjœæ bez dodania lekarza");
 
-			choice_wew = rl.nextLine().toUpperCase();
+			choice_temp = rl.nextLine().toUpperCase();
 
-			if (choice_wew.equals("T")) {
+			if (choice_temp.equals("T")) {
 				base.insert("insert into wizyty (date, time , id_l, id_p) values ('" + date + "', '" + hour + "', '"
 						+ doctor.getID() + "', '" + patient.getID() + "')");
 				System.out.println("Dodano wizytê!\n");
 			}
 
-		} while (!(choice_wew.equals("Q") || choice_wew.equals("T")));
+		} while (!(choice_temp.equals("Q") || choice_temp.equals("T")));
 
 	}
 

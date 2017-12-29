@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class PatientsAdmin {
-	
+
 	Scanner rl = new Scanner(new FilterInputStream(System.in) {
 		@Override
 		public void close() {
@@ -81,13 +81,13 @@ public class PatientsAdmin {
 				String choice_wew;
 				base.query("Select * from pacjenci", "%-5s%-15s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon",
 						"Pesel");
-				HashSet<String> zbior = base.zbior("Select * from pacjenci");
+				HashSet<String> set = base.set("Select * from pacjenci");
 
 				while (true) {
 					System.out.println(
 							"\nPodaj ID pacjenta którego chcesz usun¹æ lub 'Q' aby wyjœc do poprzedniego menu");
 					id = rl.nextLine().toUpperCase();
-					if (zbior.contains(id)) {
+					if (set.contains(id)) {
 						System.out.println("\nCzy napewno chcesz usun¹æ:");
 						base.query("Select * from pacjenci where id_p = " + id, "%-5s%-15s%-15s%-15s%-15s", "Imiê",
 								"Nazwisko", "Telefon", "Pesel");
@@ -111,10 +111,10 @@ public class PatientsAdmin {
 			}
 			case "A": {
 				String id;
-				String choice_wew;
+				String inside_choice;
 				base.query("Select * from pacjenci", "%-5s%-15s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon",
 						"Pesel");
-				HashSet<String> zbior = base.zbior("Select * from pacjenci");
+				HashSet<String> zbior = base.set("Select * from pacjenci");
 
 				while (true) {
 					System.out.println(
@@ -131,8 +131,8 @@ public class PatientsAdmin {
 						do {
 							System.out.println(
 									"\n'I'-Zmieñ imiê \n'N'-Zmieñ nazwisko \n'T'-Zmieñ telefon\n'P'-Zmieñ pesel\n'Q'-Wyjœcie do poprzedniej strony");
-							choice_wew = rl.nextLine().toUpperCase();
-							switch (choice_wew) {
+							inside_choice = rl.nextLine().toUpperCase();
+							switch (inside_choice) {
 							case "I":
 								base.update(rl, "imiê", id, "pacjenci", "id_l", "name");
 								break;
@@ -149,7 +149,7 @@ public class PatientsAdmin {
 								System.out.println("B³êdne wprowadzenie");
 							}
 
-						} while (choice_wew.equals("Q"));
+						} while (inside_choice.equals("Q"));
 
 					} else
 						System.out.println("Takiego ID nie ma w bazie!");

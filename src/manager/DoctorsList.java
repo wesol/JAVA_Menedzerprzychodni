@@ -5,15 +5,14 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DoctorsList {
-	
+
 	Scanner rl = new Scanner(new FilterInputStream(System.in) {
 		@Override
 		public void close() {
 		}
 	});
 	DBConnector base = new DBConnector();
-	
-	
+
 	public void list() throws SQLException {
 		base.query("Select * from lekarze", "%-5s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon");
 

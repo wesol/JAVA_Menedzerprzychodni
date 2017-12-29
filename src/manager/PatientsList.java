@@ -12,9 +12,9 @@ public class PatientsList {
 		}
 	});
 	DBConnector base = new DBConnector();
-	
+
 	public void list() throws SQLException {
-		base.query("Select * from pacjenci", "%-5s%-15s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon","PESEL");
+		base.query("Select * from pacjenci", "%-5s%-15s%-15s%-15s%-15s", "Imiê", "Nazwisko", "Telefon", "PESEL");
 
 		outerLoop: while (true) {
 			System.out.println("\n(Sortowanie po: 'N'-Nazwisku, 'I'-Imieniu, 'P'-Peselu ,'Q'-wyjdŸ do menu)");
@@ -22,12 +22,12 @@ public class PatientsList {
 			switch (choice) {
 			case "N": {
 				base.query("Select * from pacjenci order by last", "%-5s%-15s%-15s%-15%-15ss", "Imiê", "Nazwisko",
-						"Telefon","PESEL");
+						"Telefon", "PESEL");
 				break;
 			}
 			case "I": {
 				base.query("Select * from pacjenci order by name", "%-5s%-15s%-15s%-15s%-15s", "Imiê", "Nazwisko",
-						"Telefon","PESEL");
+						"Telefon", "PESEL");
 				break;
 			}
 			case "P": {
@@ -42,7 +42,6 @@ public class PatientsList {
 				System.out.println("Wybierz jedn¹ z dostêpnych opcji:");
 			}
 		}
-
 
 	}
 

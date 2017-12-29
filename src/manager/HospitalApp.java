@@ -18,7 +18,7 @@ public class HospitalApp {
 		DoctorsList doctorsList = new DoctorsList();
 		PatientsAdmin patientsAdmin = new PatientsAdmin();
 		DoctorsAdmin doctorsAdmin = new DoctorsAdmin();
-		
+
 		outerLoop: while (true) {
 			System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "'U' - Umówienie wizyty",
 					"'W' - Wyœwietlenie przysz³ych wizyt", "'O' - Wyœwietlenie wizyt odbytych",

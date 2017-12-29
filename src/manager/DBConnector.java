@@ -18,7 +18,6 @@ public class DBConnector {
 
 	private void connect() {
 		try {
-			// uwierzytelnianie sterownika
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/szpital?useSSL=false", "root",
 					"123MWreaktor");
@@ -37,7 +36,7 @@ public class DBConnector {
 			System.out.printf(format, "ID", title2, title3);
 			System.out.println();
 			while (rs.next()) {
-				// kolejnoœæ kolumn obs³ugiwana w zapytaniu
+				// column order using by query
 				System.out.printf(format, rs.getString(1), rs.getString(2), rs.getString(3));
 				System.out.println();
 			}
@@ -55,7 +54,6 @@ public class DBConnector {
 		try {
 			rs = stmt.executeQuery("Select * from pacjenci where pesel='" + pesel + "'");
 			if (rs.next()) {
-				// kolejnoœæ kolumn obs³ugiwana w zapytaniu
 				patient.setID(rs.getInt(1));
 				patient.setName(rs.getString(2));
 				patient.setLast(rs.getString(3));
@@ -79,7 +77,6 @@ public class DBConnector {
 			rs = stmt.executeQuery(
 					"Select * from lekarze where name='" + doctorName + "' and last='" + doctorLast + "'");
 			if (rs.next()) {
-				// kolejnoœæ kolumn obs³ugiwana w zapytaniu
 				doctor.setID(rs.getInt(1));
 				doctor.setName(rs.getString(2));
 				doctor.setLast(rs.getString(3));
@@ -103,7 +100,6 @@ public class DBConnector {
 			System.out.printf(format, "ID", title2, title3, title4);
 			System.out.println();
 			while (rs.next()) {
-				// kolejnoœæ kolumn obs³ugiwana w zapytaniu
 				System.out.printf(format, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
 				System.out.println();
 			}
@@ -124,7 +120,6 @@ public class DBConnector {
 			System.out.printf(format, "ID", title2, title3, title4, title5);
 			System.out.println();
 			while (rs.next()) {
-				// kolejnoœæ kolumn obs³ugiwana w zapytaniu
 				System.out.printf(format, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
 						rs.getString(5));
 				System.out.println();
@@ -137,20 +132,19 @@ public class DBConnector {
 		con.close();
 	}
 
-	// ===========================================================================================
-	// wstawianie nowego rekordu/update
+	// data insert/update
 	public void insert(String query) throws SQLException {
 		connect();
 		try {
 			stmt.executeUpdate(query);
-			
+
 		} catch (SQLException e) {
 			System.out.println("\nB³¹d na insert");
 
 		}
 		con.close();
 	}
-	
+
 	public void delete(String query) throws SQLException {
 		connect();
 		try {
@@ -163,22 +157,21 @@ public class DBConnector {
 		con.close();
 	}
 
-	// ===========================================================================================
-	// zapisywanie id-kow do zbioru
-	public HashSet<String> zbior(String query) throws SQLException {
-		HashSet<String> zbior_id = new HashSet<>();
+	// saving id into Set
+	public HashSet<String> set(String query) throws SQLException {
+		HashSet<String> ids_set = new HashSet<>();
 		this.connect();
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				zbior_id.add(rs.getString(1));
+				ids_set.add(rs.getString(1));
 			}
 
 		} catch (SQLException e) {
 			System.out.println("\n!!!B³¹d przy tworzeniu zbioru id\n" + e);
 		}
 		con.close();
-		return zbior_id;
+		return ids_set;
 	}
 
 	public void update(Scanner rl, String changedValueName, String id, String databaseTabelName,
